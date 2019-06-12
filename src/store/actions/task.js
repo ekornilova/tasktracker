@@ -2,11 +2,12 @@ import * as actionTypes from './actionTypes'
 import axios from '../../axios'
 import _ from 'lodash'
 //import { fetchOrderSuccess } from './order';
-export const createTaskSuccess = (id, taskData) => {
+export const createTaskSuccess = (id, taskData, updatedId) => {
     return {
         type: actionTypes.CREATE_TASK_SUCCESS,
         taskId: id,
         taskData: taskData,
+        updatedId: updatedId
     }
 }
 export const createTaskFailed = (error) => {
@@ -27,16 +28,16 @@ export const clearTask = () => {
     }
 }
 export const createTask = (taskData, token) => {
+    const taskId = taskData.taskId 
     return dispatch => {
-        createTaskStart()
-        const taskId = taskData.taskId 
+        createTaskStart()        
         _.unset(taskData,'taskId')
         const request = taskId ? axios.put('/tasks/'+taskId +'.json?auth=' + token,taskData)  
         : axios.post('/tasks.json?auth=' + token,taskData)   
         //axios.post('/tasks.json?auth=' + token,taskData)
         request
         .then(response => {
-            dispatch(createTaskSuccess(response.data.name, taskData))
+            dispatch(createTaskSuccess(response.data.name, taskData, taskId))
         }) 
         .catch(error => {
             dispatch(createTaskFailed(error))

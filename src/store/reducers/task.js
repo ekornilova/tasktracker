@@ -19,11 +19,15 @@ const reducer = (state = initialState, action) =>{
                 id: action.taskId,
                 
             }
+            let newTasks = { ...state.tasks }
+            if (action.updatedId){
+                newTasks = state.tasks.filter(task=>task.id !== action.updatedId)
+            }
             return {
                 ...state,
                 loading: false,
                 created: true,
-                tasks: state.tasks.concat(newTask),
+                tasks: newTasks.concat(newTask),
                 pickTask: null
             }
         case actionTypes.CREATE_TASK_FAILED:
@@ -70,7 +74,8 @@ const reducer = (state = initialState, action) =>{
         case actionTypes.CHANGE_VIEW:
             return {
                 ...state,
-                view: state.view === 'table' ? 'dash' : 'table'
+                view: state.view === 'table' ? 'dash' : 'table',
+                created: false
             }           
         default: return state
     }

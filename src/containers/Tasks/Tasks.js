@@ -83,7 +83,10 @@ class Tasks extends Component {
     onChangeStatus = (el, newStatus) => {
         let task = this.props.tasks.filter(t=>t.id===el.id )[0]
         task.taskData.status = newStatus
-        this.props.onEditTaskStatus(task, this.props.token)
+        this.props.onEditTaskStatus({
+            ...task,
+            taskId: el.id 
+        }, this.props.token)
     }
 
     render(){

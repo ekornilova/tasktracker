@@ -172,7 +172,7 @@ class EditTask extends Component {
                 })
         }
     }
-    componentDidMount(){
+    componentDidMount(){        
         const taskId = _.get(this.props, 'match.params.id')
         if (taskId){
             this.props.onFetchPickTask(this.props.token,taskId)
