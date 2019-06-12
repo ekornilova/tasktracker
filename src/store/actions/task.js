@@ -5,7 +5,7 @@ import _ from 'lodash'
 export const createTaskSuccess = (id, taskData, updatedId) => {
     return {
         type: actionTypes.CREATE_TASK_SUCCESS,
-        taskId: id,
+        taskId: updatedId || id,
         taskData: taskData,
         updatedId: updatedId
     }
@@ -32,16 +32,33 @@ export const createTask = (taskData, token) => {
     return dispatch => {
         createTaskStart()        
         _.unset(taskData,'taskId')
-        const request = taskId ? axios.put('/tasks/'+taskId +'.json?auth=' + token,taskData)  
-        : axios.post('/tasks.json?auth=' + token,taskData)   
-        //axios.post('/tasks.json?auth=' + token,taskData)
-        request
-        .then(response => {
-            dispatch(createTaskSuccess(response.data.name, taskData, taskId))
-        }) 
-        .catch(error => {
-            dispatch(createTaskFailed(error))
-        })
+        // const request = taskId ? axios.put('/tasks/'+taskId +'.json?auth=' + token,taskData)  
+        // : axios.post('/tasks.json?auth=' + token,taskData)   
+        // request
+        // .then(response => {
+        //     dispatch(createTaskSuccess(response.data.name, taskData, taskId))
+        // }) 
+        // .catch(error => {
+        //     dispatch(createTaskFailed(error))
+        // })
+        if (taskId){
+            axios.put('/tasks/'+taskId +'.json?auth=' + token,taskData)
+            .then(response => {
+                dispatch(createTaskSuccess(response.data.name, taskData, taskId))
+            }) 
+            .catch(error => {
+                dispatch(createTaskFailed(error))
+            })  
+        }
+        else {
+            axios.post('/tasks.json?auth=' + token,taskData) 
+            .then(response => {
+                dispatch(createTaskSuccess(response.data.name, taskData, taskId))
+            }) 
+            .catch(error => {
+                dispatch(createTaskFailed(error))
+            }) 
+        }
     }
 
 }

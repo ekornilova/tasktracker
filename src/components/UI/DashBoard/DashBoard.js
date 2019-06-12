@@ -4,11 +4,11 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import _ from 'lodash'
 // fake data generator
-const getItems = (count, offset = 0) =>
-    Array.from({ length: count }, (v, k) => k).map(k => ({
-        id: `item-${k + offset}`,
-        content: `item ${k + offset}`
-    }));
+// const getItems = (count, offset = 0) =>
+//     Array.from({ length: count }, (v, k) => k).map(k => ({
+//         id: `item-${k + offset}`,
+//         content: `item ${k + offset}`
+//     }));
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -42,11 +42,14 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? 'lightblue' : 'lightgrey',
      padding: grid,
+     height: '100%',
      width: '100%'//250
 });
 const listStyleInGeneral = {
     padding: grid,
-    width: '30%'//250
+    width: '30%',//250
+    // height: '100%',
+    // minHeight: '250px'
 }
 const labelStyle = {
     fontWeight: 'bold',

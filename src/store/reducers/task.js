@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) =>{
                 id: action.taskId,
                 
             }
-            let newTasks = { ...state.tasks }
+            let newTasks = [...state.tasks]
             if (action.updatedId){
                 newTasks = state.tasks.filter(task=>task.id !== action.updatedId)
             }

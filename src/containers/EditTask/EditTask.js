@@ -187,6 +187,7 @@ class EditTask extends Component {
             config: this.state.taskForm[el],
             id: el}
         })
+        console.log('created', this.props.created)
         const redirectToTasks = this.props.created || this.state.closeForm ? <Redirect to='/tasks'/> : null
         let form = (<form onSubmit={this.taskHandler}>
                {
