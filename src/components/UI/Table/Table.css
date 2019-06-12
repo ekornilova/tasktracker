@@ -1,0 +1,30 @@
+.Table {
+    width: 80%;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    margin-left: 10%;
+}
+.Tr {
+    text-align: center;
+}
+.Icon {
+    content: '';
+    display: 'block';
+    width: 15%;
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+}
+.TableFilter {
+    display: flex;
+    flex: auto;
+}
+.TableFilterButton {
+    height: 40px;
+    width: 50%;
+    text-align: center;
+    display: block;
+    position: relative;
+    margin-top: 3%;
+}
