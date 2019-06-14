@@ -161,7 +161,7 @@ class EditTask extends Component {
         if (taskId && !this.props.pickTask && nextProps.pickTask){            
             const { pickTask } = nextProps
             let taskForm = this.state.taskForm
-                Object.keys(pickTask.taskData).map(el=>{
+                Object.keys(pickTask.taskData).forEach(el=>{
                     taskForm[el].value = pickTask.taskData[el]
                     taskForm[el].valid = true
                 }) 
@@ -187,7 +187,6 @@ class EditTask extends Component {
             config: this.state.taskForm[el],
             id: el}
         })
-        console.log('created', this.props.created)
         const redirectToTasks = this.props.created || this.state.closeForm ? <Redirect to='/tasks'/> : null
         let form = (<form onSubmit={this.taskHandler}>
                {

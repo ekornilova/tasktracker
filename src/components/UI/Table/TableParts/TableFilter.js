@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Input from '../../Input/Input'
-import dicts from '../../../../assets/dicts'
 import _ from 'lodash'
 import gs from '../../../../assets/global-styles/bootstrap.min.css'
 import cx from 'classnames'
@@ -51,7 +50,6 @@ class TableFilter extends Component {
       }
     
     inputChangeHandler = (event, idEl) =>  {
-        console.log(event, idEl)       
         let updatedFilterForm = { ...this.state.filterForm }        
         let updatedFilterFormEl = { ...updatedFilterForm[idEl] }
         const newValue = updatedFilterFormEl.elementType === 'date' ? 

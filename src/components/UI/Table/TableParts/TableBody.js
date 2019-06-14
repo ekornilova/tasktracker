@@ -1,10 +1,9 @@
 import React from 'react'
-import classes from '../Table.css'
 import dicts from '../../../../assets/dicts'
 import _ from 'lodash'
 const tableBody = (props) => {
   const { data, columns } = props
-    return(//className={classes.Tr}
+    return(
       <tbody> 
         {data.map((element, index) =>
           <tr key={element.id}   onClick={() => props.onRowClick(element.id)}>

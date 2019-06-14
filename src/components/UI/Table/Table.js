@@ -1,7 +1,6 @@
 import React,{ Component } from 'react';
 import TableHeader from './TableParts/TableHeader'
 import TableBody from './TableParts/TableBody'
-import classes from './Table.css'
 import Aux from '../../../hoc/AuxHoc/AuxHoc'
 import TableFilter  from './TableParts/TableFilter'
 import cx from 'classnames'
@@ -48,7 +47,7 @@ class Table extends Component {
   
   onFilterData = (filterForm)=>{
     const filterEls = Object.keys(filterForm)
-    let newData = this.state.data.filter(el=>{
+    let newData = this.props.data.filter(el=>{
         let isAppropriate = true
         let i = 0
         while ((i < filterEls.length) && isAppropriate){

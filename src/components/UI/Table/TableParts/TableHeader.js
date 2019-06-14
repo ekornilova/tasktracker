@@ -19,6 +19,7 @@ const tableHeader = (props) => {
               }
               return <th key={index}>
               <img className={classes.Icon}
+              alt='sort_img'
               onClick={()=>props.onSort(pickedEl)}
                src={require('./assets/sort-asc.png')}
               style={styleIcon}

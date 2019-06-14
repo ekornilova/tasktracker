@@ -42,16 +42,6 @@ const input = (props) =>{
              showMonthDropdown
              />            
             break;
-        // case ('datesourse'):
-           
-        //      el=<DatePickerCopy
-        //     selected={props.value}
-        //     onChange={props.changed}
-        //     name={'dateee'}
-        //     locale='ru'
-        //     dateFormat={DATE_FORMAT}
-        //   />
-        //    break;    
         case ('select'):
             // el=<select  
             // className={classes.InputElement}            
@@ -61,6 +51,7 @@ const input = (props) =>{
             // {props.elementConfig.options.map(op=><option key={op.id}>{op.value}</option>)}
             // </select>
             el=<ReactSelect
+            key={props.value}
             value={_.get(props.elementConfig.options.filter(d=> d.value === props.value),0)}//,props.elementConfig.options[0]
             options={props.elementConfig.options}
             className={'Select'}

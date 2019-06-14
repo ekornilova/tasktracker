@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import ReactDOM from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
+import classes from './DashBoard.css'
 import _ from 'lodash'
 // fake data generator
 // const getItems = (count, offset = 0) =>
@@ -43,24 +43,17 @@ const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? 'lightblue' : 'lightgrey',
      padding: grid,
      height: '100%',
-     width: '100%'//250
+     width: '100%',
+     minHeight: 'inherit'
 });
 const listStyleInGeneral = {
     padding: grid,
     width: '30%',//250
-    // height: '100%',
-    // minHeight: '250px'
-}
-const labelStyle = {
-    fontWeight: 'bold',
-    display: 'block',
-    marginBottom: '8px'
+    height: '100%',
+     minHeight: '250px'
 }
 class DashBoard extends Component {
     state = {
-        // items: getItems(10),
-        // selected: getItems(5, 10),
-        // picked: getItems(3, 15),
         columns:[
             {id: 1, label: 'planned'},
             {id: 2, label: 'process'},
@@ -89,7 +82,7 @@ class DashBoard extends Component {
         const { columns } = this.state 
         const newData = {}
         columns.map(el=>_.set(newData,el.label,[]))
-        data && data.map(d=>{
+        data && data.forEach(d=>{
             const columnLabel =_.get(columns.filter(c=> c.id === d.status),[0,'label'])
             if (columnLabel)
                 newData[columnLabel].push({
@@ -131,15 +124,6 @@ class DashBoard extends Component {
             );
             
             columnsDataNew[source.droppableId] = items
-            // let state = { items };
-
-            // if (source.droppableId === 'droppable2') {
-            //     state = { selected: items };
-            // }
-
-            // if (source.droppableId === 'droppable3') {
-            //     state = { picked: items };
-            // }
             this.setState({columnsData: columnsDataNew});
         } else {
             const result = this.move(
@@ -148,22 +132,12 @@ class DashBoard extends Component {
                 source,
                 destination
             );
-            // const data = {}
-            this.state.columns.map(col=>{
+            this.state.columns.forEach(col=>{
                 if (result[col.label]){
                     columnsDataNew[col.label] = result[col.label]
                 }
 
             })
-            // if (result.droppable)
-            //     data.items = result.droppable
-            // if (result.droppable2)
-            //     data.selected = result.droppable2
-            // if (result.droppable3)
-            //     data.picked = result.droppable3
-            // this.setState({
-            //     ...data
-            // });
             this.setState({columnsData: columnsDataNew});
         }
     };
@@ -175,8 +149,10 @@ class DashBoard extends Component {
         justifyContent: 'space-between'}}>
             <DragDropContext onDragEnd={this.onDragEnd}>
             {
-                this.state.columns.map(col=><div style={listStyleInGeneral}  key={col.id}>
-                <label style={labelStyle}>{col.label.toUpperCase()}</label>    
+                this.state.columns.map(col=><div  
+                style={listStyleInGeneral}  
+                key={col.id}>
+                <label className={classes.Label}>{col.label.toUpperCase()}</label>    
                 <Droppable droppableId={col.label}>
                 {(provided, snapshot) => (
                     <div
@@ -208,90 +184,6 @@ class DashBoard extends Component {
             </Droppable>
             </div>)
             }
-              {/* <Droppable droppableId="droppable">
-                  {(provided, snapshot) => (
-                      <div
-                          ref={provided.innerRef}
-                          style={getListStyle(snapshot.isDraggingOver)}>
-                          {this.state.items.map((item, index) => (
-                              <Draggable
-                                  key={item.id}
-                                  draggableId={item.id}
-                                  index={index}>
-                                  {(provided, snapshot) => (
-                                      <div
-                                          ref={provided.innerRef}
-                                          {...provided.draggableProps}
-                                          {...provided.dragHandleProps}
-                                          style={getItemStyle(
-                                              snapshot.isDragging,
-                                              provided.draggableProps.style
-                                          )}>
-                                          {item.content}
-                                      </div>
-                                  )}
-                              </Draggable>
-                          ))}
-                          {provided.placeholder}
-                      </div>
-                  )}
-              </Droppable>
-              <Droppable droppableId="droppable2">
-                  {(provided, snapshot) => (
-                      <div
-                          ref={provided.innerRef}
-                          style={getListStyle(snapshot.isDraggingOver)}>
-                          {this.state.selected.map((item, index) => (
-                              <Draggable
-                                  key={item.id}
-                                  draggableId={item.id}
-                                  index={index}>
-                                  {(provided, snapshot) => (
-                                      <div
-                                          ref={provided.innerRef}
-                                          {...provided.draggableProps}
-                                          {...provided.dragHandleProps}
-                                          style={getItemStyle(
-                                              snapshot.isDragging,
-                                              provided.draggableProps.style
-                                          )}>
-                                          {item.content}
-                                      </div>
-                                  )}
-                              </Draggable>
-                          ))}
-                          {provided.placeholder}
-                      </div>
-                  )}
-              </Droppable>
-              <Droppable droppableId="droppable3">
-                  {(provided, snapshot) => (
-                      <div
-                          ref={provided.innerRef}
-                          style={getListStyle(snapshot.isDraggingOver)}>
-                          {this.state.picked.map((item, index) => (
-                              <Draggable
-                                  key={item.id}
-                                  draggableId={item.id}
-                                  index={index}>
-                                  {(provided, snapshot) => (
-                                      <div
-                                          ref={provided.innerRef}
-                                          {...provided.draggableProps}
-                                          {...provided.dragHandleProps}
-                                          style={getItemStyle(
-                                              snapshot.isDragging,
-                                              provided.draggableProps.style
-                                          )}>
-                                          {item.content}
-                                      </div>
-                                  )}
-                              </Draggable>
-                          ))}
-                          {provided.placeholder}
-                      </div>
-                  )}
-              </Droppable> */}
             </DragDropContext>
             </div>
         );

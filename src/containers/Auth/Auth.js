@@ -72,10 +72,10 @@ class Auth extends Component {
             controls: updControls,
         })        
     }
-    onSubmitHandler = (event) =>{ 
+    onSubmitHandler = (event, isSignUp)=>{ 
         event.preventDefault()
         this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value
-            , this.state.isSignUp)
+            , isSignUp) //this.state.isSignUp
     }
     switchAuthModeHandler = ()=> {
         this.setState(prevState => {
@@ -96,7 +96,7 @@ class Auth extends Component {
         })
         let form = <Spinner />
         if (!this.props.loading){
-            form = arr.map(a => <Input key={a.id} 
+            let formEls = arr.map(a => <Input key={a.id} 
                 value={a.config.value}
                 elementType={a.config.elementType} 
                 elementConfig={a.config.elementConfig}
@@ -105,6 +105,15 @@ class Auth extends Component {
                 inValid={!a.config.valid}
                 touched={a.config.touched}
             />)
+            form = <form onSubmit = {this.onSubmitHandler}>
+                {formEls}
+                <Button btnType='Success'
+                clicked={(event) => this.onSubmitHandler(event, false)}
+                >SIGN IN</Button>
+                <Button
+                clicked={(event) => this.onSubmitHandler(event, true)}
+                btnType='Danger'>SIGN UP</Button>
+            </form>
         }
         let errorMess = null
         if (this.props.error)
@@ -116,11 +125,8 @@ class Auth extends Component {
             <div className={classes.Auth}>
             {authRedirect}
             {errorMess}
-                <form onSubmit = {this.onSubmitHandler}>
-                    {form}
-                    <Button btnType='Success'>SUBMIT</Button>
-                </form>
-                <Button btnType='Danger' clicked={this.switchAuthModeHandler}>SWITCH TO {this.state.isSignUp ? 'SIGN IN' : 'SIGN UP'} </Button>
+                {form}
+                {/* <Button btnType='Danger' clicked={this.switchAuthModeHandler}>SWITCH TO {this.state.isSignUp ? 'SIGN IN' : 'SIGN UP'} </Button> */}
             </div>
         )
     }
