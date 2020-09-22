@@ -18,7 +18,7 @@ class EditTask extends Component {
         closeForm: false,
         taskForm:{
                 name:{
-                    value: '',//'Kate',
+                    value: '',
                     label: 'Task Header',
                     elementType: 'input',
                     elementConfig:{
@@ -33,7 +33,7 @@ class EditTask extends Component {
                     valid: false
                 },
                 description:{
-                    value: '',//'Kate',
+                    value: '',
                     label: 'Description',
                     elementType: 'textarea',
                     elementConfig:{
@@ -48,7 +48,7 @@ class EditTask extends Component {
                     valid: false
                 },
                 status:{
-                    value: 1,//''Fuchika',
+                    value: 1,
                     elementType: 'select',
                     label: 'Status',
                     elementConfig:{
@@ -57,7 +57,7 @@ class EditTask extends Component {
                     valid: true
                 },
                 priority:{
-                    value: 1,//''Fuchika',
+                    value: 1,
                     elementType: 'select',
                     label: 'Priority',
                     elementConfig:{
@@ -66,7 +66,7 @@ class EditTask extends Component {
                     valid: true
                 },
                 term:{
-                    value: '',//'Kate',
+                    value: '',
                     elementType: 'date',
                     label: 'Term',
                     elementConfig:{
@@ -75,13 +75,13 @@ class EditTask extends Component {
                     },
                     validation:{
                         required:true,
-                        minLength: 5,
+                        // minLength: 5,
                     },
                     touched: false,
                     valid: false
                 },
                 plannedTime:{
-                    value: '',//'Kate',
+                    value: '',
                     elementType: 'input',
                     label: 'Planned Time',
                     elementConfig:{
@@ -90,14 +90,13 @@ class EditTask extends Component {
                     },
                     validation:{
                         required:true,
-                        minLength: 5,
+                        // minLength: 5,
                     },
                     touched: false,
                     valid: false
                 },
                    
         },
-        //loading: false,
         formIsValid: false
     }
 
@@ -148,7 +147,8 @@ class EditTask extends Component {
         let formIsValid = true 
         for (let el in updatedTaskForm){
             formIsValid = updatedTaskForm[el].valid && formIsValid
-        }    
+        }  
+
         this.setState({
             taskForm: updatedTaskForm,
             formIsValid: formIsValid
