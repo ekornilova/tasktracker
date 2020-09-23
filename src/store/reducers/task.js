@@ -30,6 +30,19 @@ const reducer = (state = initialState, action) =>{
                 tasks: newTasks.concat(newTask),
                 pickTask: null
             }
+            case actionTypes.DELETE_TASK_SUCCESS:
+                const taskIdx = state.tasks.findIndex(taskItem => taskItem.id === action.taskId)
+                const newTasksWithoutRemovindTask = [...state.tasks]
+                if (taskIdx !== -1){
+                    newTasksWithoutRemovindTask.splice(taskIdx,1)
+                }
+                return {
+                    ...state,
+                    loading: false,
+                    tasks: newTasksWithoutRemovindTask,
+                    pickTask: null
+                }    
+        case actionTypes.DELETE_TASK_FAILED:    
         case actionTypes.CREATE_TASK_FAILED:
             return {
                 ...state,
@@ -37,6 +50,7 @@ const reducer = (state = initialState, action) =>{
                 error: action.error,
                 pickTask: null
             }
+        case actionTypes.DELETE_TASK_START:
         case actionTypes.CREATE_TASK_START:
             return {
                 ...state,

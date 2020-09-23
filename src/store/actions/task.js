@@ -22,6 +22,24 @@ export const createTaskStart = () => {
         type: actionTypes.CREATE_TASK_START,
     }
 }
+export const deleteTaskSuccess = (taskId) => {
+    return {
+        taskId,
+        type: actionTypes.DELETE_TASK_SUCCESS
+    }
+}
+export const deleteTaskFailed = (error) => {
+    return {
+        type: actionTypes.DELETE_TASK_FAILED,
+        error: error,
+    }
+}
+
+export const deleteTaskStart = () => {
+    return {
+        type: actionTypes.DELETE_TASK_START,
+    }
+}
 export const clearTask = () => {
     return {
         type: actionTypes.CLEAR_TASK,
@@ -59,6 +77,19 @@ export const createTask = (taskData, token) => {
                 dispatch(createTaskFailed(error))
             }) 
         }
+    }
+
+}
+export const deleteTask = (taskId, token) => {
+    return dispatch => {
+        deleteTaskStart()        
+        axios.delete('/tasks/'+taskId +'.json?auth=' + token)
+            .then(() => {
+                dispatch(deleteTaskSuccess(taskId))
+            }) 
+            .catch(error => {
+                dispatch(createTaskFailed(error))
+            }) 
     }
 
 }

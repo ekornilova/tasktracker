@@ -1,27 +1,15 @@
 import React, { Component } from 'react';
-//import ReactDOM from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import classes from './DashBoard.css'
+import Button from '../../UI/Button/Button'
 import _ from 'lodash'
-// fake data generator
-// const getItems = (count, offset = 0) =>
-//     Array.from({ length: count }, (v, k) => k).map(k => ({
-//         id: `item-${k + offset}`,
-//         content: `item ${k + offset}`
-//     }));
 
-// a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
 };
-
-/**
- * Moves an item from one list to another list.
- */
 
 
 const grid = 8;
@@ -52,6 +40,19 @@ const listStyleInGeneral = {
     height: '100%',
      minHeight: '250px'
 }
+const getColumnData = ( data, columns ) => {
+    const newData = {}
+    columns.map(el=>_.set(newData,el.label,[]))
+    data && data.forEach(d=>{
+        const columnLabel =_.get(columns.filter(c=> c.id === d.status),[0,'label'])
+        if (columnLabel)
+            newData[columnLabel].push({
+                ...d,
+                content: d.name
+            })
+    })
+    return newData
+}
 class DashBoard extends Component {
     state = {
         columns:[
@@ -77,23 +78,21 @@ class DashBoard extends Component {
       
           return result;
       };
+       
     componentWillMount(){
         const { data } = this.props 
         const { columns } = this.state 
-        const newData = {}
-        columns.map(el=>_.set(newData,el.label,[]))
-        data && data.forEach(d=>{
-            const columnLabel =_.get(columns.filter(c=> c.id === d.status),[0,'label'])
-            if (columnLabel)
-                newData[columnLabel].push({
-                    ...d,
-                    content: d.name
-                })
-        })
         this.setState({
-            columnsData: newData
+            columnsData: getColumnData(data, columns)
         })
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.data!==this.props.data){
+            this.setState({
+                columnsData: getColumnData(nextProps.data, this.state.columns)
+            })
+        }
+      }
     /**
      * A semi-generic way to handle multiple lists. Matches
      * the IDs of the droppable container to the names of the
@@ -141,7 +140,9 @@ class DashBoard extends Component {
             this.setState({columnsData: columnsDataNew});
         }
     };
-
+    onTaskDelete = (taskId) => () => {
+        this.props.onDeleteTask(taskId)
+    }
     // Normally you would want to split things out into separate components.
     // But in this example everything is just done in one place for simplicity
     render() {
@@ -174,6 +175,11 @@ class DashBoard extends Component {
                                         )}>
                                         {item.content}
                                         <p>Term: {item.term}</p>
+                                        <Button 
+            btnType='Danger'
+            clicked={this.onTaskDelete(item.id)}
+            >DELETE</Button>
+
                                     </div>
                                 )}
                             </Draggable>

@@ -86,7 +86,7 @@ class Table extends Component {
         <TableFilter onFilter={this.onFilterData} onClearFilter={this.onClearFilter} filterData={this.props.filterData}/>
         <table className={cx(globalStyles['table'],globalStyles['table-bordered'],globalStyles['table-hover'])}>
           <TableHeader columns={this.state.columns} sortColumn={this.state.sortColumn} onSort={this.onSortColumn}/>
-          <TableBody data={this.state.data} columns={this.props.columns} onRowClick={this.props.onRowClick} />
+          <TableBody data={this.state.data} columns={this.props.columns} onRowClick={this.props.onRowClick} onRowDelete={this.props.onRowDelete}/>
         </table>
       </Aux>
       

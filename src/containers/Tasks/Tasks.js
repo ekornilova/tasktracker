@@ -88,6 +88,9 @@ class Tasks extends Component {
             taskId: el.id 
         }, this.props.token)
     }
+    onDeleteTask = (taskId) => {
+        this.props.onDeleteTask(taskId, this.props.token)
+    }
 
     render(){
         const { view } = this.props
@@ -102,11 +105,13 @@ class Tasks extends Component {
                 })} 
                 filterData={FILTER_FORM}
                 onRowClick={this.clickTask}
+                onRowDelete={this.onDeleteTask}
                 />
             }
             else {
                 tasks = <DashBoard
                 onChange={this.onChangeStatus}
+                onDeleteTask={this.onDeleteTask}
                 data={this.props.tasks.map(el=>{
                     return {
                         id: el.id,
@@ -133,8 +138,6 @@ class Tasks extends Component {
                 className={cx(gs['btn'],gs[view === 'dash' ? 'btn-primary' : 'btn-secondary'])}
                 onClick={this.props.onChangeView}
                 disabled={view === 'dash'} 
-            // disabled={!props.purchasable} 
-                //className={classes.OrderButton}
                 >DASHBOARD</button>
                 </div>
         </div>
@@ -156,7 +159,8 @@ const mapDispatchToProps= dispatch => {
         onFetchTasks: (token,userId) => dispatch(taskActions.fetchTasks(token, userId)),        
         onInitTask: () => dispatch(taskActions.taskInit()),
         onChangeView: () => dispatch(taskActions.changeView()),
-        onEditTaskStatus:(taskData,token) => dispatch(taskActions.createTask(taskData,token))
+        onEditTaskStatus:(taskData,token) => dispatch(taskActions.createTask(taskData,token)),
+        onDeleteTask: (taskId, token) => dispatch(taskActions.deleteTask(taskId, token))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Tasks,axios))

@@ -10,11 +10,11 @@ import _ from 'lodash'
 const input = (props) =>{
     let el = null
     const inputClasses=[classes.InputElement]
-    // let validationError = null;
-    // if (props.inValid && props.shouldValidate && props.touched){
-    //         inputClasses.push(classes.Invalid)
-    //         validationError = <p>Please enter a valid value!</p>;
-    // }
+    let validationError = null;
+    if (props.inValid && props.shouldValidate && props.touched){
+            inputClasses.push(classes.Invalid)
+            validationError = <p>Please enter a valid value!</p>;
+    }
     const DATE_FORMAT = 'DD.MM.YYYY'
     switch (props.elementType) {
         case ('input'):
@@ -66,6 +66,7 @@ const input = (props) =>{
         <div  className={classes.Input}>
         <label  className={classes.Label}>{props.label}</label>
         {el}
+        {validationError}
     </div>
     )
 }

@@ -11,5 +11,6 @@ export {
     createTask,
     fetchPickedTask,
     clearTask,
-    changeView
+    changeView,
+    deleteTask
 } from './task'

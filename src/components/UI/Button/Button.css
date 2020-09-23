@@ -25,3 +25,7 @@
 .Button:disabled {
     color: grey
 }
+.TableButton {
+    margin: 0;
+    padding: 0;
+}

@@ -28,3 +28,13 @@
     position: relative;
     margin-top: 3%;
 }
+.TableRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+/* button {
+    padding: 0px;
+    margin: 0px;
+} */
